@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clock (Relógio)</title>
+</head>
+<body>
+    <div class="Clock">
+        <div class="Clock-face">
+            <div class="bar Hours"></div>
+            <div class="bar Seconds"></div>
+            <div class="bar Minutes"></div>
+            
+        </div>
+        <div class = "bunny" title="He is cheking the clock"></div>
+
+    </div>
+    <style>
+        .bunny{
+            background-image: url('./bunny.png') ;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            min-height: 100vh;
+        }
+        .Clock-face{
+            position: relative;
+            height: 100%;
+            width: 100%;
+            transform: translateY(-3px);
+            
+        }
+        .Clock{
+            width: 30rem;
+            height: 30rem;
+            border: 20px solid rgb(22, 188, 218);
+            border-radius: 50%;
+            margin: 50px auto;
+            position: relative;
+            padding: 2rem ;
+            box-shadow: 
+            0 0 0px 4px rgba(0, 0, 0, 0.1), /* Vírgula aqui */
+            inset 0 0 0 3px wheat,          /* Vírgula aqui */
+            inset 0 0 0 10px rgb(255, 255, 255),         /* Vírgula aqui */
+            0 0 10px rgba(0, 0, 0, 0.2);    /* Ponto e vírgula no final */
+            background-image: url('./middle.jpg') ;
+             background-size:contain;
+        }
+        .bar{
+            width: 50%;
+            height: 6px;
+            background: black;
+            position: absolute;
+            top: 50%;
+            transform-origin: 100%;
+            transform: rotate(90deg);
+            transition: all 0.05s;
+            transition-timing-function: cubic-bezier(0.1, 2.7, 0.55, 1);
+        }
+
+        .marker {
+            background: black;
+            width: 6px;       /* Largura da marcação */
+            height: 15px;     /* Comprimento da marcação */
+            position: absolute;
+            left: 50%;        /* Centraliza horizontalmente */
+            margin-left: -3px; /* Compensa a largura (metade de 6px) para ficar bem no meio */
+                      
+            top: -0.5rem; 
+            transform-origin: 50% 14.8rem; 
+             z-index: 0;
+        }
+
+        
+        .marker.heavy {
+            width: 10px;
+            height: 40px;
+            margin-left: -4px;
+        }
+                
+    </style>
+
+    <script>
+        const secondsBar = document.querySelector('.Seconds');
+        const minBar = document.querySelector('.Minutes');
+        const hourBar = document.querySelector('.Hours');
+
+        function setDate(){
+        const now = new Date();
+
+        //seconds
+        const seconds = now.getSeconds();
+        const secondsDegrees = ((seconds/60) * 360) + 90;
+        secondsBar.style.transform = `rotate(${secondsDegrees}deg)`;
+
+        //minutes
+        const min = now.getMinutes();
+        const minDegrees = ((min/60) * 360) + 90;
+        minBar.style.transform = `rotate(${minDegrees}deg)`;
+
+        //hours
+        const hrs =  now.getHours();
+        const hrsDegrees = ((hrs / 12) * 360) + ((min / 60) * 30) + 90;
+        hourBar.style.transform = `rotate(${hrsDegrees}deg)`;
+
+        console.log(seconds);  
+        
+        for (let i = 0; i < 60; i++) {
+            
+            const marker = document.createElement('div');
+            marker.classList.add('marker');
+            
+            if (i % 3 === 0) {
+                marker.classList.add('heavy');
+            }
+
+            marker.style.transform = `rotate(${i * 30}deg)`;
+
+            // 4. Coloca dentro do relógio
+            clockFace.appendChild(marker);
+}
+
+        }
+
+        const clockFace = document.querySelector('.Clock-face');
+        
+
+        setInterval(setDate, 1000);
+    </script>
+</body>
+</html>
